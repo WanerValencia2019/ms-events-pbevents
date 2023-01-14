@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+    dev:
+        container_name: ms_events_pbf_api_dev
+        image: ms-events-pbf-api-dev:1.0.0
+        depends_on:
+            - db
+        build:
+            context: .
+            target: development
+            dockerfile: ./Dockerfile
+        command: npm run start:debug
+        ports:
+            - 3000:3000
+            - 9229:9229
+        env_file: 
+            - .env
+        networks:
+            - ms-events-pbf-network
+        volumes:
+            - .:/usr/src/app
+            - /usr/src/app/node_modules
+        restart: unless-stopped
+    prod:
+        container_name: ms_events_pbf_api_prod
+        image: ms-events-pbf-api-prod:1.0.0
+        depends_on:
+            - db
+        build:
+            context: .
+            target: production
+            dockerfile: ./Dockerfile
+        command: npm run start:prod
+        ports:
+            - 3000:3000
+            - 9229:9229
+        env_file: 
+            - .env
+        networks:
+            - ms-events-pbf-network
+        volumes:
+            - .:/usr/src/app
+            - /usr/src/app/node_modules
+        restart: always
+
+    db:
+        container_name: ms_events_pbf_api_db
+        image: postgres:14.1
+        ports:
+            - 5432:5432
+        environment: 
+            POSTGRES_PASSWORD: ${DB_PASS}
+            POSTGRES_DB: ${DB_NAME}
+        volumes:
+            - ./postgres_data:/var/lib/postgresql/data
+        networks:
+            - ms-events-pbf-network
+
+networks:
+    ms-events-pbf-network:
+        

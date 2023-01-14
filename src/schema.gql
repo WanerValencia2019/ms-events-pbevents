@@ -1,0 +1,72 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateEventInput {
+  address: String!
+  description: String!
+  end_date: Timestamp!
+  latitude: String!
+  longitude: String!
+  sell_limit_date: Timestamp!
+  slug: String
+  start_date: Timestamp!
+  title: String!
+}
+
+type Mutation {
+  createEvent(createEventInput: CreateEventInput!): events!
+  removeEvent(id: Int!): events!
+  updateEvent(updateEventInput: UpdateEventInput!): events!
+}
+
+type Query {
+  event(id: Int!): events!
+  events: [events!]!
+}
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+input UpdateEventInput {
+  address: String
+  description: String
+  end_date: Timestamp
+  id: Int!
+  latitude: String
+  longitude: String
+  sell_limit_date: Timestamp
+  slug: String
+  start_date: Timestamp
+  title: String
+}
+
+type categories {
+  color: String!
+  created_at: Timestamp!
+  description: String!
+  id: ID!
+  name: String!
+  slug: String!
+  updated_at: Timestamp!
+}
+
+type events {
+  address: String!
+  categories: [categories!]!
+  created_at: Timestamp!
+  created_by: ID!
+  description: String!
+  end_date: Timestamp!
+  id: ID!
+  latitude: String!
+  longitude: String!
+  sell_limit_date: Timestamp!
+  slug: String!
+  space_available: Int!
+  start_date: Timestamp!
+  title: String!
+  updated_at: Timestamp!
+}
